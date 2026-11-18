@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: ai-task-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: ai-task-backend:v5
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: PORT
+
+            - name: REDIS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: REDIS_HOST
+
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: MONGO_URI
+
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_SECRET
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: ai-task-platform
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 5000
+      targetPort: 5000
+  type: ClusterIP
