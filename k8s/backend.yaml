@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ai-task-backend:v5
+          image: ghcr.io/amritakumari24/ai-task-backend:bd82aa32fd10426b0666d3260291ff558a0ef1f3
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5000

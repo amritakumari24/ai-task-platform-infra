@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ai-task-frontend:v3
+          image: ghcr.io/amritakumari24/ai-task-frontend:bd82aa32fd10426b0666d3260291ff558a0ef1f3
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 4173
