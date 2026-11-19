@@ -39,7 +39,7 @@ spec:
                 - "import os, redis; redis.Redis(host=os.getenv('REDIS_HOST', 'redis'), port=6379, socket_connect_timeout=3).ping()"
             initialDelaySeconds: 15
             periodSeconds: 20
-
+            timeoutSeconds: 5
           readinessProbe:
             exec:
               command:
@@ -48,7 +48,7 @@ spec:
                 - "import os, redis; redis.Redis(host=os.getenv('REDIS_HOST', 'redis'), port=6379, socket_connect_timeout=3).ping()"
             initialDelaySeconds: 5
             periodSeconds: 10
-
+            timeoutSeconds: 5
           resources:
             requests:
               memory: "128Mi"
