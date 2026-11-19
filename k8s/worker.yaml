@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: worker
-          image: ghcr.io/amritakumari24/ai-task-worker:c11ba112f6f7863418e76e25bf7382673aae4dc5
+          image: ghcr.io/amritakumari24/ai-task-worker:33e5eee77f5c954d7ab7d1f6e11cb4463c7a4b93
           imagePullPolicy: IfNotPresent
 
           env:
